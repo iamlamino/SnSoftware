@@ -1,0 +1,40 @@
+<div *ngIf="loading">Chargement...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<!-- 🔍 barre de recherche -->
+<p>
+  <input
+    type="text"
+    [(ngModel)]="searchQuery"
+    (ngModelChange)="onSearch($event)"
+    placeholder="Rechercher par titre ou auteur..."
+  />
+</p>
+
+<p><button (click)="goNew()">➕ Ajouter un livre</button></p>
+
+<table *ngIf="livres.length > 0">
+  <thead>
+    <tr>
+      <th>Titre</th>
+      <th>Auteur</th>
+      <th>Parution</th>
+      <th>ISBN</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let l of livres">
+      <td>{{ l.titre }}</td>
+      <td>{{ l.auteur }}</td>
+      <td>{{ l.datePublication }}</td>
+      <td>{{ l.isbn }}</td>
+      <td>
+        <button (click)="goEdit(l)">✏️</button>
+        <button (click)="delete(l)">🗑️</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="livres.length === 0 && !loading">Aucun livre trouvé.</p>

@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.model;
 
+import com.example.demo.model.StatutUtilisateur;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -7,12 +8,15 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "utilisateurs")
-public class Utilisateurs {
+@Table(name = "utilisateur")
+public class Utilisateur {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    private StatutUtilisateur statut;
 
     @NotBlank(message = "Le nom est obligatoire")
     @Column(nullable = false)
@@ -36,13 +40,14 @@ public class Utilisateurs {
     private String motDePasse;
 
     // Constructeurs
-    public Utilisateurs() {}
+    public Utilisateur() {}
 
-    public Utilisateurs(String nom, String prenom, String email, String motDePasse) {
+    public Utilisateur(String nom, String prenom, String email, String motDePasse, StatutUtilisateur statut) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.motDePasse = motDePasse;
+        this.statut = statut;
     }
 
     // Getters and Setters
@@ -83,6 +88,13 @@ public class Utilisateurs {
     }
 
     public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
+      this.motDePasse = motDePasse;
+    }
+
+    public StatutUtilisateur getStatut() {
+      return statut;
+    }
+    public void setStatut(StatutUtilisateur statut) {
+      this.statut = statut;
     }
 }

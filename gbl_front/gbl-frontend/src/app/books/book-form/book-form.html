@@ -1,0 +1,41 @@
+<div *ngIf="loading">Chargement...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div>
+    <label for="titre">Titre *</label>
+    <input id="titre" type="text" formControlName="titre" />
+    <div *ngIf="form.controls['titre'].invalid && form.controls['titre'].touched" class="error">
+      Le titre est obligatoire.
+    </div>
+  </div>
+
+  <div>
+    <label for="auteur">Auteur *</label>
+    <input id="auteur" type="text" formControlName="auteur" />
+    <div *ngIf="form.controls['auteur'].invalid && form.controls['auteur'].touched" class="error">
+      L'auteur est obligatoire.
+    </div>
+  </div>
+
+  <div>
+    <label for="datePublication">Date de publication</label>
+    <input id="datePublication" type="date" formControlName="datePublication" />
+  </div>
+
+  <div>
+    <label for="isbn">ISBN</label>
+    <input id="isbn" type="text" formControlName="isbn" />
+  </div>
+
+  <div>
+    <label for="description">Description</label>
+    <textarea id="description" formControlName="description"></textarea>
+  </div>
+
+  <div class="actions">
+    <button type="button" (click)="router.navigate(['/books'])">Annuler</button>
+    <button type="submit" [disabled]="form.invalid || loading">Sauvegarder</button>
+  </div>
+</form>
+<div *ngIf="successMsg" class="success">{{ successMsg }}</div>
