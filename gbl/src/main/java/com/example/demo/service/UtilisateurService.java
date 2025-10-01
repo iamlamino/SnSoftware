@@ -42,9 +42,12 @@ public class UtilisateurService {
     }
 
     public void delete(Long id) {
-        if (!repo.existsById(id)) {
-            throw new RuntimeException("Utilisateur non trouvé");
-        }
-        repo.deleteById(id);
+      if (!repo.existsById(id)) {
+        throw new RuntimeException("Utilisateur non trouvé");
+      }
+      repo.deleteById(id);
     }
+    public List<Utilisateur> search(String query) {
+  return repo.findByNomContainingIgnoreCaseOrPrenomContainingIgnoreCaseOrEmailContainingIgnoreCase(query, query, query);
+}
 }

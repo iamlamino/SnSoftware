@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Livre, LivreType } from '../../services/livre';
+import { Livre, LivreDTO } from '../../services/livre';
+import { Categorie, CategorieType } from '../../services/categorie';
 import { finalize, switchMap, of } from 'rxjs';
 
 @Component({
@@ -19,23 +20,32 @@ export class BookForm {
   loading = false;
   error = '';
   successMsg = '';
+  categories: CategorieType[] = [];
 
   constructor(
     private fb: FormBuilder,
     private livreService: Livre,
+    private categorieService: Categorie,
     private route: ActivatedRoute,
     public router: Router
   ) {
-    // Initialisation du formulaire
+    // Init form
     this.form = this.fb.group({
       titre: ['', Validators.required],
       auteur: ['', Validators.required],
       datePublication: [''],
       isbn: [''],
       description: [''],
+      categorieId: [null, Validators.required], // une seule catégorie
     });
 
-    // Si on est en mode édition, charger le livre existant
+    // Charger catégories
+    this.categorieService.getAll().subscribe({
+      next: (cats) => (this.categories = cats),
+      error: (err) => console.error('Impossible de charger les catégories', err),
+    });
+
+    // Mode édition
     this.route.paramMap
       .pipe(
         switchMap((params) => {
@@ -50,7 +60,12 @@ export class BookForm {
       )
       .subscribe({
         next: (livre) => {
-          if (livre) this.form.patchValue(livre);
+          if (livre) {
+            this.form.patchValue({
+              ...livre,
+              categorieId: livre.categorie ? livre.categorie.id : null,
+            });
+          }
         },
         error: (err) => {
           console.error(err);
@@ -61,16 +76,15 @@ export class BookForm {
 
   submit() {
     if (this.form.invalid) return;
-
     this.loading = true;
 
-    // Transformation du payload pour supprimer les null/undefined
-    const payload: LivreType = {
+    const payload: LivreDTO = {
       titre: this.form.value.titre || '',
       auteur: this.form.value.auteur || '',
       datePublication: this.form.value.datePublication || '',
       isbn: this.form.value.isbn || '',
       description: this.form.value.description || '',
+      categorieId: this.form.value.categorieId, // un seul id
     };
 
     const request$ =
@@ -83,7 +97,7 @@ export class BookForm {
         this.successMsg = this.isEdit
           ? '✅ Livre modifié avec succès.'
           : '✅ Livre ajouté avec succès.';
-        setTimeout(() => this.router.navigate(['/books']), 1500); // délai pour voir le message
+        setTimeout(() => this.router.navigate(['/books']), 1500);
       },
       error: (err) => {
         console.error(err);

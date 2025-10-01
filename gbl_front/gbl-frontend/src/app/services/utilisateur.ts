@@ -36,4 +36,7 @@ export class Utilisateur {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+  search(query: string): Observable<UtilisateurType[]> {
+    return this.http.get<UtilisateurType[]>(`${this.apiUrl}/search?q=${query}`);
+  }
 }

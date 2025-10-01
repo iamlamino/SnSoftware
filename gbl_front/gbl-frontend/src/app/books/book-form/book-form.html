@@ -1,41 +1,47 @@
-<div *ngIf="loading">Chargement...</div>
-<div *ngIf="error" class="error">{{ error }}</div>
+<div class="form-container">
+  <h2>{{ isEdit ? 'Modifier un livre' : 'Ajouter un livre' }}</h2>
 
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <div>
-    <label for="titre">Titre *</label>
-    <input id="titre" type="text" formControlName="titre" />
-    <div *ngIf="form.controls['titre'].invalid && form.controls['titre'].touched" class="error">
-      Le titre est obligatoire.
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label>Titre</label>
+      <input type="text" formControlName="titre" />
     </div>
-  </div>
 
-  <div>
-    <label for="auteur">Auteur *</label>
-    <input id="auteur" type="text" formControlName="auteur" />
-    <div *ngIf="form.controls['auteur'].invalid && form.controls['auteur'].touched" class="error">
-      L'auteur est obligatoire.
+    <div class="form-group">
+      <label>Auteur</label>
+      <input type="text" formControlName="auteur" />
     </div>
-  </div>
 
-  <div>
-    <label for="datePublication">Date de publication</label>
-    <input id="datePublication" type="date" formControlName="datePublication" />
-  </div>
+    <div class="form-group">
+      <label>Date de publication</label>
+      <input type="date" formControlName="datePublication" />
+    </div>
 
-  <div>
-    <label for="isbn">ISBN</label>
-    <input id="isbn" type="text" formControlName="isbn" />
-  </div>
+    <div class="form-group">
+      <label>ISBN</label>
+      <input type="text" formControlName="isbn" />
+    </div>
 
-  <div>
-    <label for="description">Description</label>
-    <textarea id="description" formControlName="description"></textarea>
-  </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea formControlName="description"></textarea>
+    </div>
 
-  <div class="actions">
-    <button type="button" (click)="router.navigate(['/books'])">Annuler</button>
-    <button type="submit" [disabled]="form.invalid || loading">Sauvegarder</button>
-  </div>
-</form>
-<div *ngIf="successMsg" class="success">{{ successMsg }}</div>
+    <div class="form-group">
+      <label>Catégorie</label>
+      <select formControlName="categorieId">
+        <option [ngValue]="null">-- Choisir une catégorie --</option>
+        <option *ngFor="let c of categories" [ngValue]="c.id">
+          {{ c.nom }}
+        </option>
+      </select>
+    </div>
+
+    <button type="submit" [disabled]="loading">
+      {{ isEdit ? 'Enregistrer' : 'Ajouter' }}
+    </button>
+  </form>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="successMsg" class="success">{{ successMsg }}</div>
+</div>

@@ -1,5 +1,5 @@
 .list-container {
-  max-width: 800px;
+  max-width: 600px;
   margin: auto;
   background: #fdfdfd;
   padding: 20px;
@@ -14,7 +14,7 @@ h2 {
 .actions {
   display: flex;
   justify-content: space-between;
-  margin: 15px;
+  margin-bottom: 15px;
 }
 
 .actions input {
@@ -28,7 +28,6 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin: 5px;
 }
 
 button.delete {
@@ -52,20 +51,6 @@ td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: center;
-}
-.book-detail:hover {
-  background-color: #f1f1f1;
-}
-.book-detail {
-}
-.clickable {
-  cursor: pointer;
-  color: #007bff;
-  text-decoration: underline;
-}
-
-.clickable:hover {
-  color: #0056b3;
 }
 
 .error {

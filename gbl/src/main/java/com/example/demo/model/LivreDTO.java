@@ -1,32 +1,15 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "livre")
-public class Livre {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class LivreDTO {
 
     private String titre;
     private String auteur;
     private String datePublication;
     private String isbn;
     private String description;
-
-    @ManyToOne
-@JoinColumn(name = "categorie_id")
-@JsonIgnoreProperties("livres")
-    private Categorie categorie;
+    private Long categorieId;
 
     // Getters et Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
     public String getTitre() { return titre; }
     public void setTitre(String titre) { this.titre = titre; }
 
@@ -42,6 +25,6 @@ public class Livre {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public Categorie getCategorie() { return categorie; }
-    public void setCategorie(Categorie categorie) { this.categorie = categorie; }
+    public Long getCategorieId() { return categorieId; }
+    public void setCategorieId(Long categorieId) { this.categorieId = categorieId; }
 }

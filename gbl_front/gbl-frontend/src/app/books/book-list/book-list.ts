@@ -19,6 +19,13 @@ export class BookList {
   successMsg = '';
   searchQuery = '';
 
+  //pagination
+  currentPage = 0;
+  pageSize = 5;
+  totalPages = 0;
+  sortBy = 'titre';
+  direction = 'asc';
+
   constructor(private livreService: Livre, private router: Router) {
     this.load();
   }
@@ -26,36 +33,60 @@ export class BookList {
   load() {
     this.loading = true;
     this.livreService
-      .getAll()
+      .getAllPaged(this.currentPage, this.pageSize, this.sortBy, this.direction)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
-        next: (l) => (this.livres = l),
-        error: (err) => {
-          console.error(err);
-          this.error = 'Impossible de récupérer la liste.';
+        next: (res) => {
+          this.livres = res.content;
+          this.totalPages = res.totalPages;
         },
+        error: () => (this.error = 'Impossible de récupérer la liste.'),
       });
   }
   onSearch(query: string) {
     if (!query) {
-      this.load(); // si la barre vide, on recharge tout
+      this.load();
       return;
     }
 
     this.livreService.search(query).subscribe({
       next: (res) => (this.livres = res),
-      error: (err) => (this.error = 'Erreur lors de la recherche'),
+      error: () => (this.error = 'Erreur lors de la recherche'),
     });
+  }
+  nextPage() {
+    if (this.currentPage < this.totalPages - 1) {
+      this.currentPage++;
+      this.load();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.load();
+    }
+  }
+
+  changeSort(field: string) {
+    this.sortBy = field;
+    this.load();
+  }
+
+  toggleDirection() {
+    this.direction = this.direction === 'asc' ? 'desc' : 'asc';
+    this.load();
   }
 
   goNew() {
-    this.router.navigate(['/books/new']); // doit correspondre au path
+    this.router.navigate(['/books/new']);
   }
 
   goEdit(l: LivreType) {
     if (!l.id) return;
     this.router.navigate(['/books/edit', l.id]);
   }
+
   delete(l: LivreType) {
     if (!l.id) return;
     if (!confirm(`Supprimer ${l.titre} ?`)) return;
@@ -67,5 +98,13 @@ export class BookList {
         alert('Erreur lors de la suppression.');
       },
     });
+  }
+
+  goUsers() {
+    this.router.navigate(['/users']);
+  }
+  goDetail(l: LivreType) {
+    if (!l.id) return;
+    this.router.navigate(['/books/detail', l.id]);
   }
 }

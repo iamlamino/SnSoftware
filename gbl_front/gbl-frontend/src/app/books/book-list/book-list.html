@@ -1,40 +1,74 @@
-<div *ngIf="loading">Chargement...</div>
-<div *ngIf="error">{{ error }}</div>
+<div class="list-container">
+  <h2>Liste des livres</h2>
 
-<!-- 🔍 barre de recherche -->
-<p>
-  <input
-    type="text"
-    [(ngModel)]="searchQuery"
-    (ngModelChange)="onSearch($event)"
-    placeholder="Rechercher par titre ou auteur..."
-  />
-</p>
+  <div class="actions">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="Rechercher un livre..."
+      (input)="onSearch(searchQuery)"
+    />
+    <button (click)="goNew()">➕ Nouveau livre</button>
+    <div class="footer-nav">
+      <button (click)="goUsers()">👤 Utilisateurs</button>
+    </div>
+  </div>
+  <div class="sort-controls">
+    <label>Trier par :</label>
+    <select [(ngModel)]="sortBy" (change)="changeSort(sortBy)">
+      <option value="titre">Titre</option>
+      <option value="auteur">Auteur</option>
+      <option value="datePublication">Date</option>
+    </select>
 
-<p><button (click)="goNew()">➕ Ajouter un livre</button></p>
+    <button (click)="toggleDirection()">
+      {{ direction === 'asc' ? '⬆️ Asc' : '⬇️ Desc' }}
+    </button>
+  </div>
 
-<table *ngIf="livres.length > 0">
-  <thead>
-    <tr>
-      <th>Titre</th>
-      <th>Auteur</th>
-      <th>Parution</th>
-      <th>ISBN</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let l of livres">
-      <td>{{ l.titre }}</td>
-      <td>{{ l.auteur }}</td>
-      <td>{{ l.datePublication }}</td>
-      <td>{{ l.isbn }}</td>
-      <td>
-        <button (click)="goEdit(l)">✏️</button>
-        <button (click)="delete(l)">🗑️</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <table *ngIf="livres.length > 0; else noData">
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Auteur</th>
+        <th>Date</th>
+        <th>ISBN</th>
+        <th>Catégorie</th>
+        <th>Actions</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr title="Détails livre" (click)="goDetail(l)" class="book-detail" *ngFor="let l of livres">
+        <td>{{ l.titre }}</td>
+        <td>{{ l.auteur }}</td>
+        <td>{{ l.datePublication }}</td>
+        <td>{{ l.isbn }}</td>
+        <td>{{ l.categorie?.nom }}</td>
+        <td>
+          <button (click)="goEdit(l)">Modifier</button>
+        </td>
+        <td>
+          <button class="delete" (click)="delete(l)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-<p *ngIf="livres.length === 0 && !loading">Aucun livre trouvé.</p>
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="currentPage === 0">⬅️ Précédent</button>
+    <span>Page {{ currentPage + 1 }} / {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Suivant ➡️</button>
+  </div>
+
+  <ng-template #noData>
+    <p>Aucun livre trouvé.</p>
+  </ng-template>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="successMsg" class="success">{{ successMsg }}</div>
+
+  <div class="footer-nav">
+    <button (click)="goUsers()">👤 Utilisateurs</button>
+  </div>
+</div>

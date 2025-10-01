@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Utilisateur, UtilisateurType } from '../../services/utilisateur';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
   selector: 'app-user-list',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './user-list.html',
   styleUrls: ['./user-list.css'],
 })
@@ -15,6 +16,7 @@ export class UserList {
   users: UtilisateurType[] = [];
   loading = false;
   error = '';
+  searchQuery = '';
 
   constructor(private utilisateurService: Utilisateur, private router: Router) {
     this.load();
@@ -54,5 +56,18 @@ export class UserList {
         alert('Erreur lors de la suppression.');
       },
     });
+  }
+  onSearch(query: string) {
+    this.searchQuery = query;
+    // appel service pour filtrer les utilisateurs
+    this.utilisateurService.search(query).subscribe({
+      next: (u) => (this.users = u),
+      error: (err) => console.error(err),
+    });
+  }
+
+  //chemins de navigation
+  goBooks() {
+    this.router.navigate(['/books']);
   }
 }

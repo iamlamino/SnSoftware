@@ -1,0 +1,28 @@
+<div class="detail-container" *ngIf="livre; else loadingOrError">
+  <h2>{{ livre.titre }}</h2>
+
+  <!--<img
+  < class="book-info">
+      *ngIf="livre.imageUrl; else noImage"
+      [src]="livre.imageUrl"
+      alt="Couverture de {{ livre.titre }}"
+    />-->
+  <ng-template #noImage>
+    <div class="placeholder">📖 Pas de couverture disponible</div>
+  </ng-template>
+
+  <div class="meta">
+    <p><strong>Auteur :</strong> {{ livre.auteur }}</p>
+    <p><strong>Date de publication :</strong> {{ livre.datePublication }}</p>
+    <p><strong>ISBN :</strong> {{ livre.isbn }}</p>
+    <p><strong>Description :</strong> {{ livre.description }}</p>
+    <p><strong>Catégorie :</strong> {{ livre.categorie?.nom }}</p>
+  </div>
+</div>
+
+<button (click)="goBack()">⬅️ Retour</button>
+
+<ng-template #loadingOrError>
+  <p *ngIf="loading">Chargement...</p>
+  <p *ngIf="error">{{ error }}</p>
+</ng-template>
