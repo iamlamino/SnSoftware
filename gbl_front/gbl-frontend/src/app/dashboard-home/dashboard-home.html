@@ -1,0 +1,23 @@
+<div class="cards-container">
+  <div class="card" (click)="goTo('books')">
+    <h3>
+      <span style="margin-right: 10px" class="material-symbols-outlined"> book_4 </span>Livres
+    </h3>
+    <p>{{ nbLivres }} livres</p>
+    <p>Voir et gérer la collection</p>
+  </div>
+
+  <div class="card" (click)="goTo('users')">
+    <h3><span class="material-symbols-outlined"> contacts_product </span> Utilisateurs</h3>
+    <p>{{ nbUsers }} utilisateurs</p>
+    <p>Liste et gestion des comptes</p>
+  </div>
+
+  <div class="card" (click)="goTo('categorie')">
+    <h3>
+      <span style="margin-right: 5px" class="material-symbols-outlined"> category </span>Catégories
+    </h3>
+    <p>{{ nbCategories }} catégories</p>
+    <p>Organiser les livres par thèmes</p>
+  </div>
+</div>

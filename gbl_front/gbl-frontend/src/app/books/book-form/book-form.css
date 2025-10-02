@@ -1,9 +1,8 @@
 .form-container {
   max-width: 500px;
   margin: auto;
-  background: #f8f9fa;
   padding: 20px;
-  border-radius: 8px;
+  color: white;
 }
 
 h2 {

@@ -1,48 +1,61 @@
 <div class="user-form">
-  <h2>{{ isEdit ? "Modifier l'utilisateur" : 'Ajouter un utilisateur' }}</h2>
-
-  <form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="list-container">
     <div>
-      <label>Nom</label>
-      <input formControlName="nom" />
-      <div *ngIf="nom?.touched && nom?.invalid" class="error">Nom requis (min 2).</div>
-    </div>
+      <h2>{{ isEdit ? "Modifier l'utilisateur" : 'Ajouter un utilisateur' }}</h2>
 
-    <div>
-      <label>Prénom</label>
-      <input formControlName="prenom" />
-      <div *ngIf="prenom?.touched && prenom?.invalid" class="error">Prénom requis (min 2).</div>
-    </div>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div>
+          <label>Nom</label>
+          <input formControlName="nom" />
+          <div *ngIf="nom?.touched && nom?.invalid" class="error">Nom requis (min 2).</div>
+        </div>
 
-    <div>
-      <label>Email</label>
-      <input formControlName="email" />
-      <div *ngIf="email?.touched && email?.invalid" class="error">Email invalide.</div>
-    </div>
+        <div>
+          <label>Prénom</label>
+          <input formControlName="prenom" />
+          <div *ngIf="prenom?.touched && prenom?.invalid" class="error">Prénom requis (min 2).</div>
+        </div>
 
-    <div>
-      <label>Mot de passe</label>
-      <input type="password" formControlName="motDePasse" />
-      <div *ngIf="motDePasse?.touched && motDePasse?.invalid" class="error">
-        Mot de passe (min 6) si renseigné.
-      </div>
-      <small *ngIf="isEdit">Laisser vide pour garder le mot de passe actuel.</small>
-    </div>
+        <div>
+          <label>Email</label>
+          <input formControlName="email" />
+          <div *ngIf="email?.touched && email?.invalid" class="error">Email invalide.</div>
+        </div>
 
-    <div>
-      <label>Statut</label>
-      <select formControlName="statut">
-        <option value="ADMIN">ADMIN</option>
-        <option value="USER">USER</option>
-      </select>
-    </div>
+        <div>
+          <label>Mot de passe</label>
+          <input type="password" formControlName="motDePasse" />
+          <div *ngIf="motDePasse?.touched && motDePasse?.invalid" class="error">
+            Mot de passe (min 6) si renseigné.
+          </div>
+          <small style="color: white" *ngIf="isEdit"
+            >Laisser vide pour garder le mot de passe actuel.</small
+          >
 
-    <div class="actions">
-      <button type="submit" [disabled]="loading">{{ isEdit ? 'Mettre à jour' : 'Créer' }}</button>
-      <button type="button" (click)="cancel()">Annuler</button>
-    </div>
+          <small style="color: white" class="info">
+            Le mot de passe doit contenir au moins 10 caractères dont une majuscule, une minuscule,
+            un chiffre et un caractère spécial.
+          </small>
+        </div>
 
-    <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
-    <div *ngIf="loading">Chargement...</div>
-  </form>
+        <div>
+          <label>Statut</label>
+          <select formControlName="statut">
+            <option value="ADMIN">ADMIN</option>
+            <option value="USER">USER</option>
+          </select>
+        </div>
+
+        <div class="actions">
+          <button type="submit" [disabled]="loading">
+            {{ isEdit ? 'Mettre à jour' : 'Créer' }}
+          </button>
+          <button type="button" (click)="cancel()">Annuler</button>
+        </div>
+
+        <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+        <div *ngIf="loading">Chargement...</div>
+      </form>
+    </div>
+  </div>
 </div>

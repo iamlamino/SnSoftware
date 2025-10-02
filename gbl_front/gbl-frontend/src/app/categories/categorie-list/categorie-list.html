@@ -1,14 +1,25 @@
 <div class="list-container">
-  <h2>Liste des catégories</h2>
-
-  <div class="actions">
-    <input
-      type="text"
-      [(ngModel)]="searchQuery"
-      placeholder="Rechercher une catégorie..."
-      (input)="onSearch(searchQuery)"
-    />
-    <button (click)="goNew()">➕ Nouvelle catégorie</button>
+  <h2>Catégories</h2>
+  <div class="list-container">
+    <div class="bar">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Rechercher une catégorie..."
+        (input)="onSearch(searchQuery)"
+      />
+      <div>
+        <button title="Livres" style="background: none" (click)="goBooks()">
+          <span style="margin-top: 5px" class="material-symbols-outlined"> book_4 </span>
+        </button>
+        <button title="Utilisateurs" style="background: none" (click)="goUsers()">
+          <span style="margin-top: 5px" class="material-symbols-outlined"> contacts_product</span>
+        </button>
+        <button title="Ajouter" style="background: none" (click)="goNew()">
+          <span style="margin-top: 5px" class="material-symbols-outlined"> add_circle </span>
+        </button>
+      </div>
+    </div>
   </div>
 
   <table *ngIf="categories.length > 0; else noData">
@@ -22,8 +33,8 @@
       <tr *ngFor="let c of categories">
         <td>{{ c.nom }}</td>
         <td>
-          <button (click)="goEdit(c)">✏️ Modifier</button>
-          <button class="delete" (click)="delete(c)">🗑️ Supprimer</button>
+          <button (click)="goEdit(c)">Modifier</button>
+          <button class="delete" (click)="delete(c)">Supprimer</button>
         </td>
       </tr>
     </tbody>
@@ -35,9 +46,4 @@
 
   <div *ngIf="error" class="error">{{ error }}</div>
   <div *ngIf="successMsg" class="success">{{ successMsg }}</div>
-
-  <div class="footer-nav">
-    <button (click)="goBooks()">📚 Livres</button>
-    <button (click)="goUsers()">👤 Utilisateurs</button>
-  </div>
 </div>

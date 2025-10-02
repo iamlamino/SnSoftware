@@ -79,12 +79,12 @@ export class BookList {
   }
 
   goNew() {
-    this.router.navigate(['/books/new']);
+    this.router.navigate(['/dashboard/books/new']);
   }
 
   goEdit(l: LivreType) {
     if (!l.id) return;
-    this.router.navigate(['/books/edit', l.id]);
+    this.router.navigate(['/dashboard/books/edit', l.id]);
   }
 
   delete(l: LivreType) {
@@ -101,10 +101,16 @@ export class BookList {
   }
 
   goUsers() {
-    this.router.navigate(['/users']);
+    this.router.navigate(['dashboard/users']);
+  }
+  goCategories() {
+    this.router.navigate(['dashboard/categorie']);
   }
   goDetail(l: LivreType) {
     if (!l.id) return;
-    this.router.navigate(['/books/detail', l.id]);
+    this.router.navigate(['/dashboard/books', l.id]);
+  }
+  cancel(): void {
+    this.router.navigate(['dashboard/users']);
   }
 }

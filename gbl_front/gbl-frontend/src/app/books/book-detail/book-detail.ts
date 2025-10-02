@@ -37,6 +37,6 @@ export class BookDetail {
   }
 
   goBack() {
-    this.router.navigate(['/books']);
+    this.router.navigate(['dashboard/books']);
   }
 }

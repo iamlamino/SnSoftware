@@ -50,12 +50,12 @@ export class CategorieList {
   }
 
   goNew() {
-    this.router.navigate(['/categorie/new']);
+    this.router.navigate(['dashboard/categorie/new']);
   }
 
   goEdit(c: CategorieType) {
     if (!c.id) return;
-    this.router.navigate(['/categorie/edit', c.id]);
+    this.router.navigate(['dashboard/categorie/edit', c.id]);
   }
 
   delete(c: CategorieType) {
@@ -72,10 +72,10 @@ export class CategorieList {
   }
 
   goBooks() {
-    this.router.navigate(['/books']);
+    this.router.navigate(['dashboard/books']);
   }
 
   goUsers() {
-    this.router.navigate(['/users']);
+    this.router.navigate(['dashboard/users']);
   }
 }

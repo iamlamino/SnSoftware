@@ -1,63 +1,7 @@
-.list-container {
-  max-width: 800px;
-  margin: auto;
-  background: #fdfdfd;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.actions {
-  display: flex;
-  justify-content: space-between;
-  margin: 15px;
-}
-
-.actions input {
-  flex: 1;
-  margin-right: 10px;
-  padding: 8px;
-}
-
-button {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 5px;
-}
-
-button.delete {
-  background: #dc3545;
-  color: white;
-}
-
-button:not(.delete) {
-  background: #007bff;
-  color: white;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 15px;
-}
-
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-}
 .book-detail:hover {
-  background-color: #f1f1f1;
+  background-color: #383131;
 }
-.book-detail {
-}
+
 .clickable {
   cursor: pointer;
   color: #007bff;

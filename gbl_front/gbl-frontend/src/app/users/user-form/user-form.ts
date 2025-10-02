@@ -9,10 +9,10 @@ import { Utilisateur, UtilisateurType } from '../../services/utilisateur';
   selector: 'app-user-form',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './user-form.html',
-  styleUrls: ['./user-form.css'], // optionnel
+  styleUrls: ['./user-form.css'],
 })
 export class UserForm implements OnInit {
-  form!: FormGroup; // initialisé dans ngOnInit
+  form!: FormGroup;
   isEdit = false;
   userId?: number;
   loading = false;
@@ -20,7 +20,7 @@ export class UserForm implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private utilisateurService: Utilisateur, // ton service
+    private utilisateurService: Utilisateur,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -35,7 +35,6 @@ export class UserForm implements OnInit {
       statut: ['ACTIF', [Validators.required]],
     });
 
-    // Vérifie si on est en édition (id dans la route)
     const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
       this.isEdit = true;
@@ -48,13 +47,12 @@ export class UserForm implements OnInit {
     this.loading = true;
     this.utilisateurService.getById(id).subscribe({
       next: (u) => {
-        // Pré-remplir le formulaire (ne pas remplir le motDePasse)
         this.form.patchValue({
           nom: u.nom,
           prenom: u.prenom,
           email: u.email,
           statut: u.statut,
-          motDePasse: '', // laisser vide pour forcer changement si souhaité
+          motDePasse: '',
         });
         this.loading = false;
       },
@@ -74,9 +72,7 @@ export class UserForm implements OnInit {
 
     const payload: UtilisateurType = this.form.value as UtilisateurType;
 
-    // Option : si édition et motDePasse vide => ne pas l'envoyer
     if (this.isEdit && (!payload.motDePasse || payload.motDePasse.trim() === '')) {
-      // supprimer la propriété motDePasse pour éviter d'envoyer une chaîne vide
       delete (payload as Partial<UtilisateurType>).motDePasse;
     }
 
@@ -87,7 +83,7 @@ export class UserForm implements OnInit {
       this.utilisateurService.update(this.userId, payload).subscribe({
         next: () => {
           this.loading = false;
-          this.router.navigate(['/users']);
+          this.router.navigate(['dashboard/users']);
         },
         error: (err) => {
           console.error(err);
@@ -99,7 +95,7 @@ export class UserForm implements OnInit {
       this.utilisateurService.create(payload).subscribe({
         next: () => {
           this.loading = false;
-          this.router.navigate(['/users']);
+          this.router.navigate(['dashboard/users']);
         },
         error: (err) => {
           console.error(err);
@@ -111,7 +107,7 @@ export class UserForm implements OnInit {
   }
 
   cancel(): void {
-    this.router.navigate(['/users']);
+    this.router.navigate(['dashboard/users']);
   }
 
   // helpers template

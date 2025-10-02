@@ -37,12 +37,12 @@ export class UserList {
   }
 
   goNew() {
-    this.router.navigate(['/users/new']);
+    this.router.navigate(['dashboard/users/new']);
   }
 
   goEdit(u: UtilisateurType) {
     if (!u.id) return;
-    this.router.navigate(['/users/edit', u.id]);
+    this.router.navigate(['dashboard/users/edit', u.id]);
   }
 
   delete(u: UtilisateurType) {
@@ -68,6 +68,9 @@ export class UserList {
 
   //chemins de navigation
   goBooks() {
-    this.router.navigate(['/books']);
+    this.router.navigate(['dashboard/books']);
+  }
+  goCategories() {
+    this.router.navigate(['dashboard/categorie']);
   }
 }

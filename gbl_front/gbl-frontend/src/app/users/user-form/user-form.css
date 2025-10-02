@@ -2,16 +2,13 @@
   max-width: 500px;
   margin: 30px auto;
   padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
   font-family: Arial, sans-serif;
+  color: white;
 }
 
 .user-form h2 {
   text-align: center;
   margin-bottom: 20px;
-  color: #333;
 }
 
 .user-form form div {
@@ -23,7 +20,6 @@
 .user-form label {
   margin-bottom: 5px;
   font-weight: bold;
-  color: #555;
 }
 
 .user-form input,
@@ -36,7 +32,6 @@
 
 .user-form input:focus,
 .user-form select:focus {
-  border-color: #007bff;
   outline: none;
 }
 
@@ -82,7 +77,9 @@
   background-color: #007bff;
   color: white;
 }
-
+button:disabled {
+  background: #aaa;
+}
 .actions button[type='submit']:disabled {
   background-color: #a0c5f2;
   cursor: not-allowed;
@@ -99,4 +96,10 @@
 
 .actions button[type='button']:hover {
   background-color: #5a6268;
+}
+.info {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.85em;
+  color: #555; /* gris neutre */
 }

@@ -36,7 +36,7 @@ export class BookForm {
       datePublication: [''],
       isbn: [''],
       description: [''],
-      categorieId: [null, Validators.required], // une seule catégorie
+      categorieId: [null, Validators.required],
     });
 
     // Charger catégories
@@ -104,5 +104,8 @@ export class BookForm {
         this.error = 'Erreur lors de la sauvegarde.';
       },
     });
+  }
+  cancel(): void {
+    this.router.navigate(['dashboard/books']);
   }
 }

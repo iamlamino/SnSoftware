@@ -1,28 +1,46 @@
 <div class="list-container">
-  <h2>Liste des livres</h2>
-
-  <div class="actions">
-    <input
-      type="text"
-      [(ngModel)]="searchQuery"
-      placeholder="Rechercher un livre..."
-      (input)="onSearch(searchQuery)"
-    />
-    <button (click)="goNew()">➕ Nouveau livre</button>
-    <div class="footer-nav">
-      <button (click)="goUsers()">👤 Utilisateurs</button>
+  <h2>Livres</h2>
+  <div class="list-container">
+    <div class="bar">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Rechercher un livre..."
+        (input)="onSearch(searchQuery)"
+      />
+      <div class="">
+        <button title="Utilisateurs" style="background: none" (click)="goUsers()">
+          <span style="margin-top: 5px" class="material-symbols-outlined"> contacts_product </span>
+        </button>
+        <button title="Catégories" style="background: none" (click)="goCategories()">
+          <span style="margin-top: 5px" class="material-symbols-outlined"> category</span>
+        </button>
+        <button title="Ajouter" style="background: none" (click)="goNew()">
+          <span style="margin-top: 5px" class="material-symbols-outlined"> add_circle </span>
+        </button>
+      </div>
     </div>
   </div>
-  <div class="sort-controls">
-    <label>Trier par :</label>
-    <select [(ngModel)]="sortBy" (change)="changeSort(sortBy)">
-      <option value="titre">Titre</option>
-      <option value="auteur">Auteur</option>
-      <option value="datePublication">Date</option>
+
+  <div style="margin: 10px">
+    <label style="color: white">Trier par :</label>
+    <select
+      style="color: rgb(255, 255, 255); background: none; border: none"
+      [(ngModel)]="sortBy"
+      (change)="changeSort(sortBy)"
+    >
+      <option style="color: black" value="titre">Titre</option>
+      <option style="color: black" value="auteur">Auteur</option>
+      <option style="color: black" value="datePublication">Date</option>
     </select>
 
-    <button (click)="toggleDirection()">
-      {{ direction === 'asc' ? '⬆️ Asc' : '⬇️ Desc' }}
+    <button style="background: none; margin: 15px" (click)="toggleDirection()">
+      <span style="margin-top: 5px" *ngIf="direction === 'asc'" class="material-symbols-outlined">
+        arrow_circle_up
+      </span>
+      <span style="margin-top: 5px" *ngIf="direction !== 'asc'" class="material-symbols-outlined">
+        arrow_circle_down
+      </span>
     </button>
   </div>
 
@@ -56,9 +74,17 @@
   </table>
 
   <div class="pagination">
-    <button (click)="prevPage()" [disabled]="currentPage === 0">⬅️ Précédent</button>
-    <span>Page {{ currentPage + 1 }} / {{ totalPages }}</span>
-    <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Suivant ➡️</button>
+    <button style="background: none" (click)="prevPage()" [disabled]="currentPage === 0">
+      <span style="margin-top: 5px" class="material-symbols-outlined"> arrow_circle_left </span>
+    </button>
+    <span style="color: white">Page {{ currentPage + 1 }} / {{ totalPages }}</span>
+    <button
+      style="background: none"
+      (click)="nextPage()"
+      [disabled]="currentPage >= totalPages - 1"
+    >
+      <span style="margin-top: 5px" class="material-symbols-outlined"> arrow_circle_right</span>
+    </button>
   </div>
 
   <ng-template #noData>
@@ -67,8 +93,4 @@
 
   <div *ngIf="error" class="error">{{ error }}</div>
   <div *ngIf="successMsg" class="success">{{ successMsg }}</div>
-
-  <div class="footer-nav">
-    <button (click)="goUsers()">👤 Utilisateurs</button>
-  </div>
 </div>

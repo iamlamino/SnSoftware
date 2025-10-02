@@ -71,9 +71,12 @@ export class CategorieForm {
         this.successMsg = this.isEdit
           ? '✅ Catégorie modifiée avec succès.'
           : '✅ Catégorie ajoutée avec succès.';
-        setTimeout(() => this.router.navigate(['/categorie']), 1500);
+        setTimeout(() => this.router.navigate(['dashboard/categorie']), 1500);
       },
       error: () => (this.error = 'Erreur lors de la sauvegarde.'),
     });
+  }
+  cancel() {
+    this.router.navigate(['dashboard/categorie']);
   }
 }
